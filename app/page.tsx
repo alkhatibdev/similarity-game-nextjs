@@ -11,9 +11,10 @@ import { getUserId } from "@/lib/session";
 import {
   getGameState,
   submitGuess,
-  getAvailableChallenges,
 } from "@/lib/api";
 import { GameState } from "@/types/game";
+import Hero from "@/components/Hero";
+import WinCard from "@/components/WinCard";
 
 export default function Home() {
   const [userId, setUserId] = useState<string>("");
@@ -21,7 +22,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [showWinModal, setShowWinModal] = useState(false);
   const [todayDate, setTodayDate] = useState<string>("");
 
@@ -30,18 +30,6 @@ export default function Home() {
     setUserId(id);
     const today = format(new Date(), "yyyy-MM-dd");
     setTodayDate(today);
-  }, []);
-
-  useEffect(() => {
-    async function fetchAvailableDates() {
-      try {
-        const data = await getAvailableChallenges();
-        setAvailableDates(data.dates);
-      } catch (err) {
-        console.error("Failed to fetch available dates:", err);
-      }
-    }
-    fetchAvailableDates();
   }, []);
 
   useEffect(() => {
@@ -87,7 +75,7 @@ export default function Home() {
           (a, b) => b.similarity_score - a.similarity_score
         );
 
-        const hasWon = newGuess.is_winner || prev.has_won;
+        const hasWon = newGuess.is_correct || prev.has_won;
 
         return {
           ...prev,
@@ -98,20 +86,20 @@ export default function Home() {
                 ...prev.game_status,
                 won: hasWon,
                 attempts: prev.game_status.attempts + 1,
-                target_word: newGuess.is_winner
+                target_word: newGuess.is_correct
                   ? newGuess.word
                   : prev.game_status.target_word,
               }
             : {
                 won: hasWon,
                 attempts: 1,
-                target_word: newGuess.is_winner ? newGuess.word : undefined,
+                target_word: newGuess.is_correct ? newGuess.word : undefined,
               },
         };
       });
 
       // Show win modal if user just won
-      if (newGuess.is_winner) {
+      if (newGuess.is_correct) {
         setTimeout(() => setShowWinModal(true), 500);
       }
     } catch (err) {
@@ -153,51 +141,13 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto"
       >
-        <header className="text-center mb-8" dir="rtl">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-            لعبة التشابه العربي
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            خمّن الكلمة السرية بناءً على التشابه الدلالي
-          </p>
-          {gameState && (
-            <div className="mt-4 text-lg font-semibold text-blue-600 dark:text-blue-400">
-              اللعبة #{gameState.game_number}
-            </div>
-          )}
-        </header>
+        <Hero gameState={gameState} />
 
         {todayDate && (
-          <Navigation currentDate={todayDate} availableDates={availableDates} />
+          <Navigation currentDate={todayDate} />
         )}
 
-        {gameState?.has_won && gameState.game_status && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-lg p-6"
-            dir="rtl"
-          >
-            <div className="text-center">
-              <div className="text-3xl mb-2">🎉</div>
-              <div className="text-xl font-bold text-green-700 dark:text-green-400 mb-2">
-                لقد فزت في هذه اللعبة!
-              </div>
-              <div className="text-gray-700 dark:text-gray-200">
-                الكلمة السرية:{" "}
-                <span className="font-bold">
-                  {gameState.game_status.target_word}
-                </span>
-              </div>
-              <div className="text-gray-600 dark:text-gray-300 text-sm mt-1">
-                عدد المحاولات: {gameState.game_status.attempts}
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                يمكنك الاستمرار في إضافة محاولات جديدة
-              </div>
-            </div>
-          </motion.div>
-        )}
+        <WinCard gameState={gameState} />
 
         <GuessInput onSubmit={handleGuessSubmit} disabled={submitting} />
 

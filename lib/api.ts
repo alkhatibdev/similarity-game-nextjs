@@ -3,7 +3,6 @@ import {
   Guess,
   GameState,
   GameStatus,
-  AvailableChallenges,
   GuessSubmission,
 } from "@/types/game";
 
@@ -53,18 +52,14 @@ async function fetchApi<T>(
   }
 }
 
-export async function getAvailableChallenges(): Promise<AvailableChallenges> {
-  return fetchApi<AvailableChallenges>("/api/challenges/available");
-}
-
 export async function getChallenge(date: string): Promise<Challenge> {
-  return fetchApi<Challenge>(`/api/challenge/${date}`);
+  return fetchApi<Challenge>(`/api/v1/challenges/${date}`);
 }
 
 export async function submitGuess(
   submission: GuessSubmission
 ): Promise<Guess> {
-  return fetchApi<Guess>("/api/guess", {
+  return fetchApi<Guess>("/api/v1/game/guess", {
     method: "POST",
     body: JSON.stringify(submission),
   });
@@ -74,19 +69,19 @@ export async function getGuesses(
   date: string,
   userId: string
 ): Promise<Guess[]> {
-  return fetchApi<Guess[]>(`/api/game/${date}/guesses/${userId}`);
+  return fetchApi<Guess[]>(`/api/v1/game/${date}/guesses/${userId}`);
 }
 
 export async function getGameStatus(
   date: string,
   userId: string
 ): Promise<GameStatus> {
-  return fetchApi<GameStatus>(`/api/game/${date}/status/${userId}`);
+  return fetchApi<GameStatus>(`/api/v1/game/${date}/status/${userId}`);
 }
 
 export async function getGameState(
   date: string,
   userId: string
 ): Promise<GameState> {
-  return fetchApi<GameState>(`/api/game/${date}/state/${userId}`);
+  return fetchApi<GameState>(`/api/v1/game/${date}/state/${userId}`);
 }

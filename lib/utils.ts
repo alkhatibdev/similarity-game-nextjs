@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getSimilarityColor(score: number): string {
-  if (score >= 100) return "bg-green-100 dark:bg-green-900/40 border-green-500 dark:border-green-400";
-  if (score >= 70) return "bg-lime-100 dark:bg-lime-900/40 border-lime-500 dark:border-lime-400";
-  if (score >= 50) return "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500 dark:border-yellow-400";
-  if (score >= 30) return "bg-orange-100 dark:bg-orange-900/40 border-orange-500 dark:border-orange-400";
-  return "bg-red-100 dark:bg-red-900/40 border-red-500 dark:border-red-400";
+  if (score >= 100) return "bg-green-50 dark:bg-green-900/40 border-green-300 dark:border-green-400";
+  if (score >= 70) return "bg-lime-50 dark:bg-lime-900/40 border-lime-300 dark:border-lime-400";
+  if (score >= 50) return "bg-yellow-50 dark:bg-yellow-900/40 border-yellow-300 dark:border-yellow-400";
+  if (score >= 30) return "bg-orange-50 dark:bg-orange-900/40 border-orange-300 dark:border-orange-400";
+  return "bg-red-50 dark:bg-red-900/40 border-red-300 dark:border-red-400";
 }
 
 export function getSimilarityGradient(score: number): string {
@@ -33,7 +33,7 @@ export function formatDate(dateString: string): string {
 
 export function getShareText(attempts: number, gameNumber: number, won: boolean): string {
   if (won) {
-    return `لعبة التشابه العربي #${gameNumber}\n✅ فزت في ${attempts} محاولة!\n`;
+    return `🎯 تحدي الكلمات العربي - لعبة التشابه \nالتحدي رقم #${gameNumber}\n✅ فزت في ${attempts} محاولة!\n`;
   }
-  return `لعبة التشابه العربي #${gameNumber}\nلعبت ${attempts} محاولة`;
+  return `🎯 تحدي الكلمات العربي - لعبة التشابه \nالتحدي رقم #${gameNumber}\nلعبت ${attempts} محاولة`;
 }

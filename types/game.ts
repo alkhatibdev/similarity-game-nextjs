@@ -10,7 +10,7 @@ export interface Guess {
   word: string;
   similarity_score: number;
   cosine_similarity: number;
-  is_winner: boolean;
+  is_correct: boolean;
   created_at: string;
 }
 

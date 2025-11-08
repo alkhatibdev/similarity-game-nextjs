@@ -1,36 +1,35 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { format, addDays, subDays, parseISO } from "date-fns";
+import { format, addDays, subDays } from "date-fns";
 
 interface NavigationProps {
   currentDate: string;
-  availableDates: string[];
 }
 
 export default function Navigation({
   currentDate,
-  availableDates,
 }: NavigationProps) {
   const router = useRouter();
 
   const today = format(new Date(), "yyyy-MM-dd");
   const isToday = currentDate === today;
 
-  const currentIndex = availableDates.indexOf(currentDate);
-  const hasPrev = currentIndex > 0;
-  const hasNext = currentIndex < availableDates.length - 1 && !isToday;
+  // Calculate previous and next dates
+  const prevDate = format(subDays(new Date(currentDate), 1), "yyyy-MM-dd");
+  const nextDate = format(addDays(new Date(currentDate), 1), "yyyy-MM-dd");
+
+  // Allow previous navigation (user can navigate to any past date)
+  const hasPrev = true;
+  // Disable next if current date is today or future
+  const hasNext = currentDate < today;
 
   const goToPrev = () => {
-    if (hasPrev) {
-      const prevDate = availableDates[currentIndex - 1];
-      router.push(`/game/${prevDate}`);
-    }
+    router.push(`/game/${prevDate}`);
   };
 
   const goToNext = () => {
     if (hasNext) {
-      const nextDate = availableDates[currentIndex + 1];
       router.push(`/game/${nextDate}`);
     }
   };
@@ -42,32 +41,34 @@ export default function Navigation({
 
   return (
     <div className="flex items-center justify-between gap-4 mb-6" dir="rtl">
+
       <button
-        onClick={goToNext}
-        disabled={!hasNext}
-        className="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
+        onClick={goToPrev}
+        disabled={!hasPrev}
+        className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
       >
-        التالي ←
+        → السابق
       </button>
 
       <div className="flex-1 text-center">
         {!isToday && (
           <button
             onClick={goToToday}
-            className="px-4 py-2 bg-green-500 dark:bg-green-600 text-white rounded-lg hover:bg-green-600 dark:hover:bg-green-700 transition-colors text-sm"
+            className="px-3 py-2 bg-green-500 dark:bg-green-600 text-white text-sm rounded-sm hover:bg-green-600 dark:hover:bg-green-700 transition-colors text-sm"
           >
-            العودة لليوم
+            العودة لتحدي اليوم
           </button>
         )}
       </div>
 
       <button
-        onClick={goToPrev}
-        disabled={!hasPrev}
-        className="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
+        onClick={goToNext}
+        disabled={!hasNext}
+        className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
       >
-        → السابق
+        التالي ←
       </button>
+
     </div>
   );
 }

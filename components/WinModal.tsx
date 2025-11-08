@@ -22,7 +22,7 @@ export default function WinModal({
     if (navigator.share) {
       navigator
         .share({
-          title: "لعبة التشابه العربي",
+          title: "تحدي الكلمات العربي - تحدي التشابه",
           text: text,
           url: url,
         })
@@ -76,11 +76,11 @@ export default function WinModal({
             </h2>
 
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              سنراك غداً في لعبة أخرى!
+              سنراك غداً في التحدي القادم!
             </p>
 
             <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-lg p-6 mb-6">
-              <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">الكلمة السرية:</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">الكلمة هي:</div>
               <div className="text-3xl font-bold text-green-700 dark:text-green-400 mb-4">
                 {gameStatus.target_word}
               </div>
