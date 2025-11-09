@@ -33,7 +33,7 @@ export function formatDate(dateString: string): string {
 
 export function getShareText(attempts: number, gameNumber: number, won: boolean): string {
   if (won) {
-    return `🎯 تحدي الكلمات العربي - لعبة التشابه \nالتحدي رقم #${gameNumber}\n✅ فزت في ${attempts} محاولة!\n`;
+    return `🎯 ألعاب تفكير وتحدي - تحدي التشابه والتقارب \n🏆 التحدي رقم #${gameNumber}\n✅ فزت في ${attempts} محاولة!\n`;
   }
-  return `🎯 تحدي الكلمات العربي - لعبة التشابه \nالتحدي رقم #${gameNumber}\nلعبت ${attempts} محاولة`;
+  return `🎯 ألعاب تفكير وتحدي - تحدي التشابه والتقارب \n🏆 التحدي رقم #${gameNumber}\n✅ لعبت ${attempts} محاولة!\n`;
 }

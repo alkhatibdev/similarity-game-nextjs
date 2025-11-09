@@ -22,8 +22,8 @@ export default function WinModal({
     if (navigator.share) {
       navigator
         .share({
-          title: "تحدي الكلمات العربي - تحدي التشابه",
-          text: text,
+          title: "ألعاب تفكير وتحدي - تحدي التشابه والتقارب",
+          text:  text +  "...\n",
           url: url,
         })
         .catch(() => {
