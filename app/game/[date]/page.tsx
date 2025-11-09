@@ -87,7 +87,15 @@ export default function GamePage() {
       setGameState((prev) => {
         if (!prev) return prev;
 
-        const updatedGuesses = [newGuess, ...prev.guesses].sort(
+        const guessExists = prev.guesses.some((guess) => guess.id === newGuess.id);
+        let updatedGuesses = [];
+        if (!guessExists) {
+          updatedGuesses = [newGuess, ...prev.guesses]
+        } else {
+          updatedGuesses = prev.guesses;
+        }
+
+        updatedGuesses.sort(
           (a, b) => b.similarity_score - a.similarity_score
         );
 
@@ -99,18 +107,18 @@ export default function GamePage() {
           has_won: hasWon,
           game_status: prev.game_status
             ? {
-                ...prev.game_status,
-                won: hasWon,
-                attempts: prev.game_status.attempts + 1,
-                target_word: newGuess.is_correct
-                  ? newGuess.word
-                  : prev.game_status.target_word,
-              }
+              ...prev.game_status,
+              won: hasWon,
+              attempts: prev.game_status.attempts + 1,
+              target_word: newGuess.is_correct
+                ? newGuess.word
+                : prev.game_status.target_word,
+            }
             : {
-                won: hasWon,
-                attempts: 1,
-                target_word: newGuess.is_correct ? newGuess.word : undefined,
-              },
+              won: hasWon,
+              attempts: 1,
+              target_word: newGuess.is_correct ? newGuess.word : undefined,
+            },
         };
       });
 
