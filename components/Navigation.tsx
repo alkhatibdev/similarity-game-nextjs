@@ -42,13 +42,14 @@ export default function Navigation({
   return (
     <div className="flex items-center justify-between gap-4 mb-6" dir="rtl">
 
-      <button
-        onClick={goToPrev}
-        disabled={!hasPrev}
-        className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
-      >
-        → السابق
-      </button>
+      {hasPrev && (
+        <button
+          onClick={goToPrev}
+          className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
+        >
+          → السابق
+        </button>
+      )}
 
       <div className="flex-1 text-center">
         {!isToday && (
@@ -61,14 +62,16 @@ export default function Navigation({
         )}
       </div>
 
-      <button
-        onClick={goToNext}
-        disabled={!hasNext}
-        className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
-      >
-        التالي ←
-      </button>
+      {hasNext && (
+        <button
+          onClick={goToNext}
+          className="px-3 py-2 bg-gray-200 dark:bg-gray-600  text-sm rounded-sm hover:bg-gray-300 dark:hover:bg-gray-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors font-semibold"
+        >
+          التالي ←
+        </button>
+      )
+      }
 
-    </div>
+    </div >
   );
 }

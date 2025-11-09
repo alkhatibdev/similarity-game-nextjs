@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getSimilarityColor(score: number): string {
-  if (score >= 100) return "bg-green-50 dark:bg-green-900/40 border-green-300 dark:border-green-400";
-  if (score >= 70) return "bg-lime-50 dark:bg-lime-900/40 border-lime-300 dark:border-lime-400";
-  if (score >= 50) return "bg-yellow-50 dark:bg-yellow-900/40 border-yellow-300 dark:border-yellow-400";
-  if (score >= 30) return "bg-orange-50 dark:bg-orange-900/40 border-orange-300 dark:border-orange-400";
-  return "bg-red-50 dark:bg-red-900/40 border-red-300 dark:border-red-400";
+  if (score >= 100) return "bg-green-100 dark:bg-green-900/40 border-green-300 dark:border-green-800";
+  if (score >= 70) return "bg-lime-100 dark:bg-lime-900/40 border-lime-300 dark:border-lime-800";
+  if (score >= 50) return "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-300 dark:border-yellow-800";
+  if (score >= 30) return "bg-orange-100 dark:bg-orange-900/40 border-orange-300 dark:border-orange-800";
+  return "bg-red-100 dark:bg-red-900/40 border-red-300 dark:border-red-800";
 }
 
 export function getSimilarityGradient(score: number): string {

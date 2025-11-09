@@ -13,7 +13,7 @@ export default function GuessListRow({ guess, index }: GuessListRowProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.05 }}
-            className={`p-4 rounded-lg border-1 ${getSimilarityColor(
+            className={`p-4 rounded-lg border-0 ${getSimilarityColor(
                 guess.similarity_score
             )} shadow-sm`}
         >
@@ -32,7 +32,7 @@ export default function GuessListRow({ guess, index }: GuessListRowProps) {
                     initial={{ width: 0 }}
                     animate={{ width: `${guess.similarity_score}%` }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="h-full rounded-full"
+                    className="h-full rounded-full opacity-50"
                     style={{
                         background: `linear-gradient(to right, ${getSimilarityGradient(
                             guess.similarity_score

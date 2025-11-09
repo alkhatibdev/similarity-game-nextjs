@@ -17,7 +17,7 @@ export default function WinCard({gameState}: WinCardProps){
             <div className="text-center">
               <div className="text-3xl mb-2">🎉</div>
               <div className="text-xl font-bold text-green-700 dark:text-green-400 mb-2">
-                لقد فزت في هذه اللعبة!
+                لقد فزت بالتحدي رقم #{gameState.game_number} !
               </div>
               <div className="text-gray-700 dark:text-gray-200">
                 الكلمة هي:{" "}
@@ -28,9 +28,9 @@ export default function WinCard({gameState}: WinCardProps){
               <div className="text-gray-600 dark:text-gray-300 text-sm mt-1">
                 عدد المحاولات: {gameState.game_status.attempts}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+              {/* <div className="text-sm text-gray-500 dark:text-gray-400 mt-3">
                 يمكنك الاستمرار في إضافة محاولات جديدة
-              </div>
+              </div> */}
             </div>
           </motion.div>
         )

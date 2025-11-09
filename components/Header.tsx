@@ -14,10 +14,10 @@ export default function Header() {
           <div className="text-3xl">🎯</div>
           <div>
             <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-              تحدي الكلمات
+              تحدي التشابه والتقارب
             </h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              العربي
+            <p className="text-xs font-bold text-cyan-00 dark:text-cyan-500">
+              ألعاب تفكير وتحدي
             </p>
           </div>
         </div>

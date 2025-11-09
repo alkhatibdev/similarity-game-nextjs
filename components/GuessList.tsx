@@ -45,7 +45,7 @@ export default function GuessList({ guesses }: GuessListProps) {
       <hr className="border border-gray-200 dark:border-gray-700 my-4" />
 
       {guesses.map((guess, index) => (
-        <GuessListRow guess={guess} index={index + 1} />
+        <GuessListRow key={guess.id} guess={guess} index={index + 1} />
       ))}
     </div>
   );
