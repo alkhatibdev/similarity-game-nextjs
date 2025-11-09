@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import IconSpinner from "./icons/IconSpinner";
 
 interface GuessInputProps {
   onSubmit: (word: string) => void;
@@ -33,9 +34,10 @@ export default function GuessInput({ onSubmit, submitting }: GuessInputProps) {
         <button
           type="submit"
           disabled={submitting || !inputValue.trim()}
-          className="px-6 py-3 bg-cyan-600 dark:bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-cyan-600 dark:bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 disabled:bg-cyan-700 dark:disabled:bg-cyan-700 disabled:cursor-not-allowed transition-colors"
         >
-          خمّن
+          {submitting && <IconSpinner />}
+          {!submitting && "خمّن"}
         </button>
       </div>
     </form>

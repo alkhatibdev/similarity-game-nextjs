@@ -13,7 +13,7 @@ import {
   getGameState,
   submitGuess,
 } from "@/lib/api";
-import { GameState, Guess } from "@/types/game";
+import { GameState } from "@/types/game";
 import { ApiError } from "@/lib/api";
 import Hero from "@/components/Hero";
 import WinCard from "@/components/WinCard";
