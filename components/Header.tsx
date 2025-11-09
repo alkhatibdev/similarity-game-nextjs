@@ -2,15 +2,19 @@
 
 import { useTheme } from "@/lib/theme";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3" dir="rtl">
+        <div className="flex items-center gap-3 cursor-pointer" dir="rtl"
+          onClick={() => router.push("/")}
+          >
           <div className="text-3xl">🎯</div>
           <div>
             <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">
