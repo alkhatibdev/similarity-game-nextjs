@@ -20,7 +20,7 @@ export default function Header() {
             <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">
               تحدي التشابه والتقارب
             </h1>
-            <p className="text-xs font-bold text-cyan-00 dark:text-cyan-500">
+            <p className="text-xs font-bold text-cyan-600 dark:text-cyan-500">
               ألعاب تفكير وتحدي
             </p>
           </div>
