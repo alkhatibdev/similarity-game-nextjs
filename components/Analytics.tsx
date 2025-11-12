@@ -29,9 +29,10 @@ function AnalyticsTracker() {
         lastTrackedUrl.current = url;
 
         // Use event instead of config to avoid duplicate initial pageviews
-        window.gtag('event', 'page_view', {
-          page_path: url,
-        });
+        // window.gtag('event', 'page_view', {
+        //   page_path: url,
+        // });
+        console.log('Page view tracked', url);
       }
     }
   }, [pathname, searchParams, gaId]);
