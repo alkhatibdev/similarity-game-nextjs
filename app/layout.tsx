@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/Header";
+import Analytics from "@/components/Analytics";
 
 export const metadata: Metadata = {
   title: "تحدي التشابه والتقارب | ألعاب تفكير وتحدي",
@@ -13,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
@@ -34,9 +36,26 @@ export default function RootLayout({
             `,
           }}
         />
+        {gaId && (
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        )}
+        {gaId && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `,
+              }}
+            />
+          )
+        }
       </head>
       <body className="antialiased">
         <ThemeProvider>
+          <Analytics />
           <Header />
           {children}
         </ThemeProvider>
