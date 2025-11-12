@@ -21,7 +21,7 @@ function AnalyticsTracker() {
   const lastTrackedUrl = useRef<string>('');
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.gtag && gaId) {
+    if (typeof window !== 'undefined' && gaId) {
       const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
 
       // Only track if the URL has actually changed
