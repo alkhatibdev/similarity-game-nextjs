@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/Header";
-import Analytics from "@/components/Analytics";
 
 export const metadata: Metadata = {
   title: "تحدي التشابه والتقارب | ألعاب تفكير وتحدي",
@@ -55,7 +54,6 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          <Analytics />
           <Header />
           {children}
         </ThemeProvider>

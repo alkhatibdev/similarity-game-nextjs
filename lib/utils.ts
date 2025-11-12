@@ -37,3 +37,17 @@ export function getShareText(attempts: number, gameNumber: number, won: boolean)
   }
   return `🎯 ألعاب تفكير وتحدي - تحدي التشابه والتقارب \n🏆 التحدي رقم #${gameNumber}\n✅ لعبت ${attempts} محاولة!\n`;
 }
+
+
+export function sendGAEvent(eventName: string, eventParams: Record<string, any>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  if (typeof window !== 'undefined' && window.gtag && gaId) {
+    window.gtag('event', eventName, eventParams);
+  }
+
+  // Usage example:
+  // sendGAEvent('button_click', {
+  //   button_label: 'Sign Up',
+  //   button_color: 'blue',
+  // });
+}
