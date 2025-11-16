@@ -44,9 +44,17 @@ export default function GiveUpModal({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="text-3xl mb-2"
+            >
+             🏳️
+            </motion.div>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               className="text-3xl mb-8"
             >
-             إستسلام!
+              إستسلام!
             </motion.div>
 
             <h2 className="text-xl text-gray-800 dark:text-gray-100 mb-8">
