@@ -4,6 +4,7 @@ import {
   GameState,
   GameStatus,
   GuessSubmission,
+  GiveUpSubmission,
 } from "@/types/game";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -60,6 +61,13 @@ export async function submitGuess(
   submission: GuessSubmission
 ): Promise<Guess> {
   return fetchApi<Guess>("/api/v1/game/guess", {
+    method: "POST",
+    body: JSON.stringify(submission),
+  });
+}
+
+export async function giveUp(submission: GiveUpSubmission): Promise<Guess> {
+  return fetchApi<Guess>("/api/v1/game/giveup", {
     method: "POST",
     body: JSON.stringify(submission),
   });

@@ -6,17 +6,20 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import GuessInput from "@/components/GuessInput";
 import GuessList from "@/components/GuessList";
-import WinModal from "@/components/WinModal";
+import WinModal from "@/components/modals/WinModal";
 import Navigation from "@/components/Navigation";
 import { getUserId } from "@/lib/session";
 import {
   getGameState,
+  giveUp,
   submitGuess,
 } from "@/lib/api";
-import { GameState } from "@/types/game";
+import { GameState, Guess } from "@/types/game";
 import { ApiError } from "@/lib/api";
 import Hero from "@/components/Hero";
 import WinCard from "@/components/WinCard";
+import IconSpinner from "./icons/IconSpinner";
+import { FLAG_GIVEUP } from "@/lib/utils";
 
 interface GameBoardProps {
   date: string;
@@ -79,11 +82,20 @@ export default function GameBoard({ date }: GameBoardProps) {
     setError(null);
 
     try {
-      const newGuess = await submitGuess({
-        user_id: userId,
-        challenge_date: date,
-        word: word,
-      });
+      let newGuess: Guess;
+
+      if (word && word.trim() && word.trim() !== FLAG_GIVEUP) {
+        newGuess = await submitGuess({
+          user_id: userId,
+          challenge_date: date,
+          word: word,
+        });
+      } else {
+        newGuess = await giveUp({
+          user_id: userId,
+          challenge_date: date,
+        });
+      }
 
       // Update game state with new guess
       setGameState((prev) => {
@@ -139,7 +151,7 @@ export default function GameBoard({ date }: GameBoardProps) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-800">
         <div className="text-center" dir="rtl">
-          <div className="text-2xl mb-2">⏳</div>
+          <div className="text-2xl mb-2"><IconSpinner /></div>
           <div className="text-gray-600 dark:text-gray-300">جاري التحميل...</div>
         </div>
       </div>
@@ -173,7 +185,7 @@ export default function GameBoard({ date }: GameBoardProps) {
 
         <WinCard gameState={gameState} />
 
-        <GuessInput onSubmit={handleGuessSubmit} submitting={submitting} />
+        <GuessInput onSubmit={handleGuessSubmit} submitting={submitting} gameState={gameState} />
 
         {error && gameState && (
           <motion.div

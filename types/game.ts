@@ -39,3 +39,8 @@ export interface GuessSubmission {
   challenge_date: string;
   word: string;
 }
+
+export interface GiveUpSubmission {
+  user_id: string;
+  challenge_date: string;
+}
