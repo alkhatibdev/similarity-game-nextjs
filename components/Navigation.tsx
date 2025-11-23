@@ -55,9 +55,11 @@ export default function Navigation({
         {!isToday && (
           <button
             onClick={goToToday}
-            className="px-3 py-2 bg-green-500 dark:bg-green-600 text-white text-sm rounded-sm hover:bg-green-600 dark:hover:bg-green-700 transition-colors text-sm"
+            className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-200 text-sm rounded-lg hover:from-green-200 hover:to-emerald-200 dark:hover:from-green-800/50 dark:hover:to-emerald-800/50 transition-all font-semibold ring ring-green-200 dark:ring-green-700/50"
           >
-            العودة لتحدي اليوم
+            <span className="flex items-center gap-1 justify-center">
+              🏠 العودة لتحدي اليوم
+            </span>
           </button>
         )}
       </div>

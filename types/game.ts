@@ -27,6 +27,7 @@ export interface GameState {
   guesses: Guess[];
   game_status?: GameStatus;
   has_won: boolean;
+  hints: WodHint[];
 }
 
 export interface AvailableChallenges {
@@ -43,4 +44,9 @@ export interface GuessSubmission {
 export interface GiveUpSubmission {
   user_id: string;
   challenge_date: string;
+}
+
+export interface WodHint {
+  hint_text: string;
+  hint_order: number;
 }

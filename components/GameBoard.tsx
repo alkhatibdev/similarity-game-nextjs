@@ -13,8 +13,9 @@ import {
   getGameState,
   giveUp,
   submitGuess,
+  provideWodHint,
 } from "@/lib/api";
-import { GameState, Guess } from "@/types/game";
+import { GameState, Guess, WodHint } from "@/types/game";
 import { ApiError } from "@/lib/api";
 import Hero from "@/components/Hero";
 import WinCard from "@/components/WinCard";
@@ -34,6 +35,9 @@ export default function GameBoard({ date }: GameBoardProps) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showWinModal, setShowWinModal] = useState(false);
+  const [hints, setHints] = useState<WodHint[]>([]);
+  const [requestingHint, setRequestingHint] = useState(false);
+  const [hintError, setHintError] = useState<string | null>(null);
 
   useEffect(() => {
     const id = getUserId();
@@ -58,6 +62,10 @@ export default function GameBoard({ date }: GameBoardProps) {
       try {
         const state = await getGameState(date, userId);
         setGameState(state);
+        // Extract hints from game state
+        if (state.hints && state.hints.length > 0) {
+          setHints(state.hints);
+        }
       } catch (err) {
         // If it's a 403 error (future date), redirect to home
         if (err instanceof ApiError && err.status === 403) {
@@ -147,6 +155,32 @@ export default function GameBoard({ date }: GameBoardProps) {
     }
   };
 
+  const handleRequestHint = async () => {
+    if (!userId || !date || requestingHint) return;
+
+    setRequestingHint(true);
+    setHintError(null);
+
+    try {
+      const newHint = await provideWodHint(date, userId);
+      setHints((prev) => [...prev, newHint]);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 403) {
+          setHintError("لقد استخدمت جميع التلميحات المتاحة (3/3)");
+        } else if (err.status === 404) {
+          setHintError("لا توجد تلميحات متاحة لهذا التحدي");
+        } else {
+          setHintError(err.message || "فشل الحصول على التلميح");
+        }
+      } else {
+        setHintError(err instanceof Error ? err.message : "فشل الحصول على التلميح");
+      }
+    } finally {
+      setRequestingHint(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-800">
@@ -185,7 +219,15 @@ export default function GameBoard({ date }: GameBoardProps) {
 
         <WinCard gameState={gameState} />
 
-        <GuessInput onSubmit={handleGuessSubmit} submitting={submitting} gameState={gameState} />
+        <GuessInput
+          onSubmit={handleGuessSubmit}
+          submitting={submitting}
+          gameState={gameState}
+          hints={hints}
+          onRequestHint={handleRequestHint}
+          requestingHint={requestingHint}
+          hintError={hintError}
+        />
 
         {error && gameState && (
           <motion.div

@@ -46,7 +46,7 @@ export default function GiveUpModal({
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               className="text-3xl mb-2"
             >
-             🏳️
+              🏳️
             </motion.div>
             <motion.div
               initial={{ scale: 0 }}

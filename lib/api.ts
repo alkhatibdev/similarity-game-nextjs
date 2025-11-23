@@ -5,6 +5,7 @@ import {
   GameStatus,
   GuessSubmission,
   GiveUpSubmission,
+  WodHint,
 } from "@/types/game";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -92,4 +93,13 @@ export async function getGameState(
   userId: string
 ): Promise<GameState> {
   return fetchApi<GameState>(`/api/v1/game/${date}/state/${userId}`);
+}
+
+export async function provideWodHint(
+  date: string,
+  userId: string
+): Promise<WodHint> {
+  return fetchApi<WodHint>(`/api/v1/game/${date}/hints/${userId}`, {
+    method: "POST",
+  });
 }
