@@ -21,6 +21,7 @@ import Hero from "@/components/Hero";
 import WinCard from "@/components/WinCard";
 import IconSpinner from "./icons/IconSpinner";
 import { FLAG_GIVEUP } from "@/lib/utils";
+import { useToast } from "@/components/ToastProvider";
 
 interface GameBoardProps {
   date: string;
@@ -28,6 +29,7 @@ interface GameBoardProps {
 
 export default function GameBoard({ date }: GameBoardProps) {
   const router = useRouter();
+  const { showToast } = useToast();
 
   const [userId, setUserId] = useState<string>("");
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -105,17 +107,21 @@ export default function GameBoard({ date }: GameBoardProps) {
         });
       }
 
+      // Check if guess already exists before updating state
+      const isDuplicate = gameState?.guesses.some((guess) => guess.id === newGuess.id);
+
+      if (isDuplicate) {
+        showToast("لقد خمنت هذه الكلمة من قبل", "warning");
+      }
+
       // Update game state with new guess
       setGameState((prev) => {
         if (!prev) return prev;
 
         const guessExists = prev.guesses.some((guess) => guess.id === newGuess.id);
-        let updatedGuesses = [];
-        if (!guessExists) {
-          updatedGuesses = [newGuess, ...prev.guesses]
-        } else {
-          updatedGuesses = prev.guesses;
-        }
+        const updatedGuesses = guessExists
+          ? prev.guesses
+          : [newGuess, ...prev.guesses];
 
         updatedGuesses.sort(
           (a, b) => b.similarity_score - a.similarity_score

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
+import ToastProvider from "@/components/ToastProvider";
 import Header from "@/components/Header";
 
 export const metadata: Metadata = {
@@ -54,8 +55,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          <Header />
-          {children}
+          <ToastProvider>
+            <Header />
+            {children}
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
